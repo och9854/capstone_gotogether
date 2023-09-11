@@ -1,0 +1,4 @@
+# 이거 로컬에서 설치하고 시작!
+
+# pip install google-cloud-speech
+# pip install googlemaps

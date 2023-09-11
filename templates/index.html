@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>같이가이소</title>
+    <style>
+        #phoneImage {
+            margin-bottom: 20px;
+            width: 400px;
+            height: 800px;
+            cursor: pointer;
+        }
+        #messageFrame {
+            margin-bottom: 20px;
+            border-radius: 5px;
+            width: 400px;
+            height: 800px;
+            cursor: pointer;
+            border: 1px solid black; 
+        }
+        #message{
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='image/phone1.jpg') }}" alt="Phone" id="phoneImage">
+
+    <form action="/" method="post">
+        <label for="origin">출발지:</label>
+        <input type="text" id="origin" name="origin" required>
+        <br>
+        <label for="destination">도착지:</label>
+        <input type="text" id="destination" name="destination" required>
+        <br>
+        <input type="submit" value="경로 검색">
+        <br>
+    </form>
+
+
+    <div id="messageFrame">
+        <div id="message">
+            {% if directions %}
+            <h2>경로 정보</h2>
+            <p>예상 소요시간: {{ duration }}
+            <br>예상 요금: {{ fare }}</p>
+            <h2>상세 경로</h2>
+            <ul id="directions-list">
+                {% for direction in directions.split('\n') %}
+                    <li>{{ direction }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        
+            {% if weather_info %}
+            <h2>오늘의 대구 날씨</h2>
+            <p>{{ weather_info }}</p>
+            {% endif %}
+        
+            {% if directions %}
+            {{transit_message}}
+            {{arrival_message}}
+            {{first_step_message}}
+            {{ktx_message}}
+            {% endif %}
+        </div>
+    </div>
+
+
+    <script>
+        const phoneImage = document.getElementById('phoneImage');
+        const messageFrame = document.getElementById('messageFrame');  <!-- messageFrame div 참조 추가 -->
+            
+        const images = ["{{ url_for('static', filename='image/phone1.jpg') }}","{{ url_for('static', filename='image/phone2.jpg') }}","{{ url_for('static', filename='image/phone3.jpg') }}","{{ url_for('static', filename='image/phone4.jpg') }}"];
+        let currentIndex = 0;
+    
+        phoneImage.addEventListener('click', () => {
+            currentIndex++;
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            phoneImage.src = images[currentIndex];
+            
+            // phone4.jpg 이미지를 클릭했을 때 messageFrame div 표시
+            if (phoneImage.src.includes('phone4.jpg')) {
+                messageFrame.style.display = 'block';
+            } else {
+                messageFrame.style.display = 'none';
+            }
+        });
+    
+        </script>
+    
+    </body>
+    </html>
+
+    
+</body>
+</html>

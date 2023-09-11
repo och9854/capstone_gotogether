@@ -1,0 +1,7 @@
+TO use GCP_STT, u need s2t.key.json
+If u wanna use it, let Minse know to get json
+
+Paste this code in your venv(Chage the file path)
+
+
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/haminse/Downloads/s2t_key.json
